@@ -1494,6 +1494,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         if(protime != null){
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Log.e("khizar", protime);
             //  Date date = dateFormat.parse(time);
             String currentDateandTime = dateFormat.format(new Date());
             double a = currentDateandTime.compareTo(protime);
