@@ -1493,14 +1493,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         String protime = getTime();
         Log.e("khizarabc", protime);
         //Toast.makeText(getBaseContext(),protime,Toast.LENGTH_SHORT).show();
-        /*if(protime != null){
+        if (protime != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Log.e("khizar", protime);
             //  Date date = dateFormat.parse(time);
             String currentDateandTime = dateFormat.format(new Date());
             double a = currentDateandTime.compareTo(protime);
-            if (currentDateandTime.compareTo(protime) > 0)
-            {
+            if (currentDateandTime.compareTo(protime) > 0) {
                 try {
                     sendMessage("PRO EXPIRED");
                     try {
@@ -1514,7 +1513,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 }
 
             }
-        }*/
+        }
         //TODO legacy
         //LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
         if (duration == null) duration = "";
