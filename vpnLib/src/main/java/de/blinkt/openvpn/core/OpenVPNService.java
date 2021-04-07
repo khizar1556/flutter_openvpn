@@ -1491,8 +1491,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
         String protime = ProfileManager.getLastConnectedVpn().time;
-
-        if(protime != null){
+        Log.e("khizar", protime);
+        Toast.makeText(getBaseContext(),protime,Toast.LENGTH_SHORT).show();
+        /*if(protime != null){
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Log.e("khizar", protime);
             //  Date date = dateFormat.parse(time);
@@ -1513,7 +1514,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 }
 
             }
-        }
+        }*/
         //TODO legacy
         //LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
         if (duration == null) duration = "";
