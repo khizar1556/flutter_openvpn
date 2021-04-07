@@ -1491,8 +1491,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
         String protime = getTime();
-        Log.e("khizar", protime);
-        Toast.makeText(getBaseContext(),protime,Toast.LENGTH_SHORT).show();
+        Log.e("khizarabc", protime);
+        //Toast.makeText(getBaseContext(),protime,Toast.LENGTH_SHORT).show();
         /*if(protime != null){
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Log.e("khizar", protime);
