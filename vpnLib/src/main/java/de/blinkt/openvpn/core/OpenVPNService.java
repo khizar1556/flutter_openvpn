@@ -1490,7 +1490,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 }
             }
         }
-        String protime = ProfileManager.getLastConnectedVpn().time;
+        String protime = getTime();
         Log.e("khizar", protime);
         Toast.makeText(getBaseContext(),protime,Toast.LENGTH_SHORT).show();
         /*if(protime != null){
