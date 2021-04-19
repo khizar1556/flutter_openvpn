@@ -78,7 +78,6 @@ public class LaunchVPN extends Activity {
 
     private static final int START_VPN_PROFILE = 70;
 
-
     private VpnProfile mSelectedProfile;
     private boolean mhideLog = false;
 
