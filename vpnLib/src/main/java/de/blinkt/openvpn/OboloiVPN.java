@@ -33,6 +33,8 @@ public class OboloiVPN extends Activity {
     private static Intent profileIntent;
     private static String user;
     private static String pass;
+    private static String dns1="";
+    private static String dns2="";
     private static String country;
     private static String profileId;
     private static String time="";
@@ -58,7 +60,7 @@ public class OboloiVPN extends Activity {
         //LocalBroadcastManager.getInstance(activity).registerReceiver(broadcastReceiver, new IntentFilter("connectionState"));
     }
 
-    public void launchVPN(String ovpnFileContent, String expireAt, String user, String pass, String country, String profileId, int timeOutInSeconds, String time) {
+    public void launchVPN(String ovpnFileContent, String expireAt, String user, String pass, String country, String profileId, int timeOutInSeconds, String time,String dns1,String dns2) {
         OboloiVPN.ovpnFileContent = ovpnFileContent;
         OboloiVPN.expireAt = expireAt;
         OboloiVPN.profileIntent = VpnService.prepare(activity);
@@ -69,6 +71,10 @@ public class OboloiVPN extends Activity {
         OboloiVPN.profileId = profileId;
         if (time != null) {
             OboloiVPN.time = time;
+        }
+        if(dns1!=null && dns2!=null){
+            OboloiVPN.dns1=dns1;
+            OboloiVPN.dns2=dns2;
         }
         if (profileIntent != null) {
             activity.startActivityForResult(OboloiVPN.profileIntent, 1);
@@ -123,7 +129,7 @@ public class OboloiVPN extends Activity {
     private void startVpn() {
         try {
 
-            OpenVpnApi.startVpn(activity, ovpnFileContent, "", expireAt, user, pass, profileId, timeOutInSeconds,time);
+            OpenVpnApi.startVpn(activity, ovpnFileContent, "", expireAt, user, pass, profileId, timeOutInSeconds,time,dns1,dns2);
 
             //connecting status
             vpnStart = true;
