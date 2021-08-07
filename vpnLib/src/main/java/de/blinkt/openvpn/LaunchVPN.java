@@ -282,7 +282,6 @@ public class LaunchVPN extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
-
             }
         });
         d.setOnCancelListener(new DialogInterface.OnCancelListener() {
