@@ -11,7 +11,8 @@ package="de.blinkt.openvpn">
     <!-- Begin Activity by ics-openvpn -->
     <service
         android:name="de.blinkt.openvpn.core.OpenVPNService"
-        android:permission="android.permission.BIND_VPN_SERVICE">
+        android:permission="android.permission.BIND_VPN_SERVICE"
+        android:exported="false">
         <intent-filter>
             <action android:name="android.net.VpnService"/>
         </intent-filter>
@@ -21,7 +22,8 @@ package="de.blinkt.openvpn">
         android:name="de.blinkt.openvpn.LaunchVPN"
         android:excludeFromRecents="true"
         android:label="@string/vpn_launch_title"
-        android:theme="@android:style/Theme.DeviceDefault.Light.Panel">
+        android:theme="@android:style/Theme.DeviceDefault.Light.Panel"
+        android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
 
@@ -29,6 +31,7 @@ package="de.blinkt.openvpn">
         </intent-filter>
     </activity>
     <activity
+        android:exported="false"
         android:name=".DisconnectVPNActivity"
         android:excludeFromRecents="true"
         android:noHistory="true"
