@@ -12,7 +12,7 @@ package="de.blinkt.openvpn">
     <service
         android:name="de.blinkt.openvpn.core.OpenVPNService"
         android:permission="android.permission.BIND_VPN_SERVICE"
-        android:exported="true">
+        android:exported="false">
         <intent-filter>
             <action android:name="android.net.VpnService"/>
         </intent-filter>
