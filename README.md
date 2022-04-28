@@ -1,4 +1,4 @@
-# Cake-VPN
+# Speed-VPN
 Android VPN app based on OpenVPN library.
 
 </br>
