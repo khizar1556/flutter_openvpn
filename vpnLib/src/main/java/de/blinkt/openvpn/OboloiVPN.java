@@ -32,6 +32,7 @@ public class OboloiVPN extends Activity {
     private static boolean vpnStart;
     private static Intent profileIntent;
     private static String user;
+    private static Boolean bypass=true;
     private static String pass;
     private static String country;
     private static String profileId;
@@ -76,7 +77,25 @@ public class OboloiVPN extends Activity {
         }
         if (listener != null) listener.onProfileLoaded(true);
     }
-
+    public void launchVPN(String ovpnFileContent, String expireAt, String user, String pass, String country, String profileId, int timeOutInSeconds, String time,Boolean bypass) {
+        OboloiVPN.ovpnFileContent = ovpnFileContent;
+        OboloiVPN.expireAt = expireAt;
+        OboloiVPN.profileIntent = VpnService.prepare(activity);
+        OboloiVPN.user = user;
+        OboloiVPN.pass = pass;
+        OboloiVPN.country = country;
+        OboloiVPN.timeOutInSeconds = timeOutInSeconds;
+        OboloiVPN.profileId = profileId;
+        OboloiVPN.bypass = bypass;
+        if (time != null) {
+            OboloiVPN.time = time;
+        }
+        if (profileIntent != null) {
+            activity.startActivityForResult(OboloiVPN.profileIntent, 1);
+            return;
+        }
+        if (listener != null) listener.onProfileLoaded(true);
+    }
     public void onPermissionChanged(boolean permitted) {
         if (permitted) {
             if (listener != null) listener.onProfileLoaded(true);
@@ -123,8 +142,7 @@ public class OboloiVPN extends Activity {
     private void startVpn() {
         try {
 
-            OpenVpnApi.startVpn(activity, ovpnFileContent, "", expireAt, user, pass, profileId, timeOutInSeconds,time);
-
+            OpenVpnApi.startVpn(activity, ovpnFileContent, "", expireAt, user, pass, profileId, timeOutInSeconds,time,bypass);
             //connecting status
             vpnStart = true;
 

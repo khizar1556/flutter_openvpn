@@ -21,13 +21,11 @@ public class OpenVpnApi {
 
     private static final String TAG = "OpenVpnApi";
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    public static void startVpn(Context context, String inlineConfig, String sCountry, String expireAt, String userName, String pw, String profileId, int timeOutInSeconds, String time) throws RemoteException {
+    public static void startVpn(Context context, String inlineConfig, String sCountry, String expireAt, String userName, String pw, String profileId, int timeOutInSeconds, String time,Boolean bypass) throws RemoteException {
         if (TextUtils.isEmpty(inlineConfig)) throw new RemoteException("config is empty");
-        startVpnInternal(context, inlineConfig, sCountry, expireAt, userName, pw, profileId, timeOutInSeconds, time);
+        startVpnInternal(context, inlineConfig, sCountry, expireAt, userName, pw, profileId, timeOutInSeconds, time,bypass);
     }
-
-    static void startVpnInternal(Context context, String inlineConfig, String sCountry, String expireAt, String userName, String pw, String profileId, int timeOutInSeconds, String time) throws RemoteException {
+    static void startVpnInternal(Context context, String inlineConfig, String sCountry, String expireAt, String userName, String pw, String profileId, int timeOutInSeconds, String time,Boolean bypass) throws RemoteException {
         ConfigParser cp = new ConfigParser();
         try {
             cp.parseConfig(new StringReader(inlineConfig));
@@ -41,6 +39,7 @@ public class OpenVpnApi {
                 throw new RemoteException(context.getString(vp.checkProfile(context)));
             }
             vp.mProfileCreator = context.getPackageName();
+            vp.mAllowLocalLAN = bypass;
             vp.mUsername = userName;
             vp.mPassword = pw;
             vp.mExpireAt = expireAt;
