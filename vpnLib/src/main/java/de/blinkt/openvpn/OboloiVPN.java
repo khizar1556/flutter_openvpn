@@ -44,8 +44,8 @@ public class OboloiVPN extends Activity {
         OboloiVPN.vpnStart = false;
         OboloiVPN.vpnThread = new OpenVPNThread();
         OboloiVPN.vpnService = new OpenVPNService();
-        if(activity.getClass()!=null)
-            OboloiVPN.vpnService.setNotificationActivityClass(activity.getClass());
+        /*if(activity.getClass()!=null)
+            OboloiVPN.vpnService.setNotificationActivityClass(activity.getClass());*/
         VpnStatus.initLogCache(activity.getCacheDir());
     }
 
@@ -53,8 +53,8 @@ public class OboloiVPN extends Activity {
         OboloiVPN.vpnStart = false;
         OboloiVPN.vpnThread = new OpenVPNThread();
         OboloiVPN.vpnService = new OpenVPNService();
-        if(activity.getClass()!=null)
-            OboloiVPN.vpnService.setNotificationActivityClass(activity.getClass());
+        /*if(activity.getClass()!=null)
+            OboloiVPN.vpnService.setNotificationActivityClass(activity.getClass());*/
     }
 
     public void setOnVPNStatusChangeListener(OnVPNStatusChangeListener listener) {
