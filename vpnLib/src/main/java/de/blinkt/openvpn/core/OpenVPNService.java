@@ -1352,6 +1352,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         TotalTraffic.calcTraffic(this, in, out, diffIn, diffOut);
         if (mDisplayBytecount) {
+            time = Calendar.getInstance().getTimeInMillis() - c;
+            lastPacketReceive = Integer.parseInt(convertTwoDigit((int) (time / 1000) % 60)) - Integer.parseInt(seconds);
+            seconds = convertTwoDigit((int) (time / 1000) % 60);
+            minutes = convertTwoDigit((int) ((time / (1000 * 60)) % 60));
+            hours = convertTwoDigit((int) ((time / (1000 * 60 * 60)) % 24));
+            duration = hours + ":" + minutes + ":" + seconds;
+            lastPacketReceive = checkPacketReceive(lastPacketReceive);
+
             String netstat = String.format(getString(R.string.statusline_bytecount),
                     humanReadableByteCount(in, false, getResources()),
                     humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true, getResources()),
@@ -1364,13 +1372,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     humanReadableByteCount(in, false, getResources())) + " - " + humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, false, getResources()) + "/s";
             byteOut = String.format("↑%2$s", getString(R.string.statusline_bytecount),
                     humanReadableByteCount(out, false, getResources())) + " - " + humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, false, getResources()) + "/s";
-            time = Calendar.getInstance().getTimeInMillis() - c;
-            lastPacketReceive = Integer.parseInt(convertTwoDigit((int) (time / 1000) % 60)) - Integer.parseInt(seconds);
-            seconds = convertTwoDigit((int) (time / 1000) % 60);
-            minutes = convertTwoDigit((int) ((time / (1000 * 60)) % 60));
-            hours = convertTwoDigit((int) ((time / (1000 * 60 * 60)) % 24));
-            duration = hours + ":" + minutes + ":" + seconds;
-            lastPacketReceive = checkPacketReceive(lastPacketReceive);
+
             sendMessage(duration, String.valueOf(lastPacketReceive), byteIn, byteOut);
         }
 

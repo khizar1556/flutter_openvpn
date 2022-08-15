@@ -44,7 +44,7 @@ public class OpenVpnApi {
             vp.mPassword = pw;
             vp.mExpireAt = expireAt;
             vp.time = time;
-            Toast.makeText(context, vp.time, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, vp.time, Toast.LENGTH_SHORT).show();
             ProfileManager.setTemporaryProfile(context, vp);
             VPNLaunchHelper.startOpenVpn(vp, context);
         } catch (IOException | ConfigParser.ConfigParseError e) {
