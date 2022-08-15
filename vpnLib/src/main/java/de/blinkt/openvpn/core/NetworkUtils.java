@@ -28,18 +28,19 @@ public class NetworkUtils {
                 NetworkCapabilities nc = conn.getNetworkCapabilities(network);
 
                 // Skip VPN networks like ourselves
-                if (nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
+                if (nc!=null && nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
                     continue;
 
                 // Also skip mobile networks
-                if (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+                if (nc!=null && nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
                     continue;
 
 
                 for (LinkAddress la : li.getLinkAddresses()) {
                     if ((la.getAddress() instanceof Inet4Address && !ipv6) ||
                             (la.getAddress() instanceof Inet6Address && ipv6))
-                        nets.add(la.toString());
+                        if(la!=null)
+                            nets.add(la.toString());
                 }
             }
         } else {
