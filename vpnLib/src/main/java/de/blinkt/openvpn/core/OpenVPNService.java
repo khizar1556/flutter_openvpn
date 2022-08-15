@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.core;
 
 import android.Manifest.permission;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Notification;
@@ -50,6 +51,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
@@ -212,11 +214,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
                 // Let the configure Button show the Log
                 Intent intent = new Intent(getBaseContext(), mNotificationActivityClass);
-                String typeStart = Objects.requireNonNull(
+               /* String typeStart = Objects.requireNonNull(
                         mNotificationActivityClass.getField("TYPE_START").get(null)).toString();
                 Integer typeFromNotify = Integer.parseInt(Objects.requireNonNull(mNotificationActivityClass.getField("TYPE_FROM_NOTIFY").get(null)).toString());
                 intent.putExtra(typeStart, typeFromNotify);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                */intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 PendingIntent pIntent =null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -1352,14 +1354,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         TotalTraffic.calcTraffic(this, in, out, diffIn, diffOut);
         if (mDisplayBytecount) {
-            time = Calendar.getInstance().getTimeInMillis() - c;
-            lastPacketReceive = Integer.parseInt(convertTwoDigit((int) (time / 1000) % 60)) - Integer.parseInt(seconds);
-            seconds = convertTwoDigit((int) (time / 1000) % 60);
-            minutes = convertTwoDigit((int) ((time / (1000 * 60)) % 60));
-            hours = convertTwoDigit((int) ((time / (1000 * 60 * 60)) % 24));
-            duration = hours + ":" + minutes + ":" + seconds;
-            lastPacketReceive = checkPacketReceive(lastPacketReceive);
-
             String netstat = String.format(getString(R.string.statusline_bytecount),
                     humanReadableByteCount(in, false, getResources()),
                     humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true, getResources()),
@@ -1367,11 +1361,24 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true, getResources()));
 
 
+
             showNotification(netstat, null, NOTIFICATION_CHANNEL_BG_ID, mConnecttime, LEVEL_CONNECTED, null);
-            byteIn = String.format("↓%2$s", getString(R.string.statusline_bytecount),
+           /* byteIn = String.format("↓%2$s", getString(R.string.statusline_bytecount),
                     humanReadableByteCount(in, false, getResources())) + " - " + humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, false, getResources()) + "/s";
             byteOut = String.format("↑%2$s", getString(R.string.statusline_bytecount),
                     humanReadableByteCount(out, false, getResources())) + " - " + humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, false, getResources()) + "/s";
+           */ byteIn = String.valueOf(in);
+            byteOut = String.valueOf(out);
+
+            if(byteIn.isEmpty() ||byteIn.trim().length() == 0) byteIn = "0";
+            if(byteOut.isEmpty() || byteOut.trim().length() == 0) byteOut = "0";
+            time = Calendar.getInstance().getTimeInMillis() - c;
+            lastPacketReceive = Integer.parseInt(convertTwoDigit((int) (time / 1000) % 60)) - Integer.parseInt(seconds);
+            Calendar connectedOn = Calendar.getInstance();
+            connectedOn.setTimeInMillis(c);
+            @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            duration = dateFormat.format(connectedOn.getTime());
+            lastPacketReceive = checkPacketReceive(lastPacketReceive);
 
             sendMessage(duration, String.valueOf(lastPacketReceive), byteIn, byteOut);
         }
